@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>우리가 몰랐던 진실 💡</title>
+    <style>
+        body { font-family: 'Malgun Gothic', sans-serif; background: #f0f2f5; display: flex; justify-content: center; padding: 40px; }
+        .container { background: white; max-width: 650px; padding: 40px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
+        .scene { margin-bottom: 40px; padding: 20px; border-radius: 15px; background: #fffaf0; }
+        h2 { color: #2c3e50; border-bottom: 2px solid #e67e22; padding-bottom: 10px; }
+        .story-text { font-size: 1.1rem; line-height: 1.7; color: #555; }
+        .truth-btn { background: #e67e22; color: white; border: none; padding: 12px 20px; border-radius: 8px; cursor: pointer; margin-top: 15px; font-weight: bold; }
+        .hidden-truth { display: none; background: #e8f4f8; padding: 20px; border-radius: 10px; margin-top: 15px; border-left: 5px solid #3498db; animation: slideDown 0.5s; }
+        @keyframes slideDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>🤔 그 사람이 왜 그랬을까?</h1>
+    <p>겉으로 보이는 모습만으로 판단하기 전, 그 사람의 신발을 신어보세요.</p>
+
+    <div class="scene">
+        <h2>STORY 1. 단짝 친구의 '읽씹'</h2>
+        <div class="story-text">
+            민지는 어제부터 내 톡을 읽고도 답이 없어. 오늘 학교에서도 나를 피하는 것 같아. 
+            나한테 화난 걸까? 아니면 내가 이제 필요 없어진 걸까? 너무 서운하고 화가 나!
+        </div>
+        <button class="truth-btn" onclick="showTruth(1)">민지의 신발 신어보기 👣</button>
+        <div id="truth-1" class="hidden-truth">
+            <b>민지의 진실:</b> 어제 키우던 강아지가 무지개다리를 건넜어. 밤새 울어서 눈이 퉁퉁 부었지. 
+            지수에게 슬픈 모습을 보이기 싫어서 피했던 것뿐인데, 지수가 오해할까 봐 마음이 무거워.
+        </div>
+    </div>
+
+    <div class="scene">
+        <h2>STORY 2. 엄마의 폭풍 잔소리</h2>
+        <div class="story-text">
+            학원 끝나고 친구랑 잠깐 놀다 왔는데, 엄마가 보자마자 소리를 지르셔. 
+            "이 성적에 놀 정신이 있니?" 엄마는 나를 공부하는 기계로만 보시는 걸까? 정말 숨이 막혀.
+        </div>
+        <button class="truth-btn" onclick="showTruth(2)">엄마의 신발 신어보기 👣</button>
+        <div id="truth-2" class="hidden-truth">
+            <b>엄마의 진실:</b> 연락 없이 늦는 너를 기다리며 엄마는 온갖 무서운 생각을 다 했단다. 
+            사고라도 난 건 아닐까 가슴이 터질 듯이 뛰었어. 너를 보자마자 너무 안심이 돼서 눈물이 날 뻔했지만, 
+            바보같이 화난 목소리가 먼저 나와버렸네.
+        </div>
+    </div>
+</div>
+
+<script>
+    function showTruth(id) {
+        document.getElementById('truth-' + id).style.display = 'block';
+    }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>도덕 게임 월드</title>
+    <link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
+    
+    <style>
+        /* 화면 전체 배경 설정 */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Jua', sans-serif;
+            background: linear-gradient(135deg, #e0c3fc 0%, #8ec5fc 100%); /* 화사한 파스텔톤 그라데이션 */
+            display: flex; /* 화면 중앙 정렬을 위한 설정 */
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            text-align: center;
+        }
+
+        /* 내용이 들어가는 하얀색 박스 */
+        .container {
+            background-color: rgba(255, 255, 255, 0.95);
+            padding: 50px 70px;
+            border-radius: 25px; /* 모서리 둥글게 */
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15); /* 부드러운 그림자 */
+        }
+
+        /* 메인 제목 글씨 설정 */
+        h1 {
+            font-size: 3rem;
+            color: #2c3e50;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+
+        /* 설명 글씨 설정 */
+        p {
+            font-size: 1.4rem;
+            color: #555;
+            margin-bottom: 40px;
+        }
+
+        /* 리스트(점) 스타일 없애기 */
+        ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        li {
+            margin-bottom: 25px;
+        }
+
+        /* 버튼 기본 디자인 */
+        a {
+            display: block;
+            text-decoration: none;
+            font-size: 1.6rem;
+            color: white;
+            padding: 20px 30px;
+            border-radius: 50px; /* 알약 모양 버튼 */
+            transition: all 0.3s ease; /* 마우스 올렸을 때 부드러운 움직임 */
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        /* 각 버튼마다 다른 테마 색상 지정 */
+        li:nth-child(1) a { background-color: #FF6B6B; } /* 따뜻한 빨강 */
+        li:nth-child(2) a { background-color: #4D96FF; } /* 시원한 파랑 */
+        li:nth-child(3) a { background-color: #6BCB77; } /* 싱그러운 초록 */
+
+        /* 버튼에 마우스를 올렸을 때의 효과 */
+        a:hover {
+            transform: translateY(-8px); /* 위로 붕 뜨는 효과 */
+            box-shadow: 0 12px 20px rgba(0, 0, 0, 0.2);
+            filter: brightness(1.1); /* 살짝 더 밝아짐 */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎮 내 마음의 온도계를 따뜻하게 올려라! 🌟</h1>
+        <p>준비되었나요? 입장 바꿔 생각해 보는 모험을 시작해 보세요!</p>
+
+        <ul>
+            <li><a href="jinsil.html">🤔 그 사람이 왜 그랬을까? 생각해보기 </a></li>
+            <li><a href="mind_change.html">🤔 타인의 신발을 신어봐! 게임</a></li>
+        </ul>
+    </div>
+</body>
+</html>
