@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>역지사지 리얼 시나리오 체험</title>
+    <title>역지사지 리얼 시뮬레이터</title>
     <style>
         :root {
             --primary-color: #4a90e2;
@@ -17,104 +17,56 @@
         body { 
             font-family: 'Pretendard', 'Malgun Gothic', sans-serif; 
             background: var(--bg-color); 
-            margin: 0; 
-            padding: 40px 20px;
-            color: var(--text-main);
-            line-height: 1.6;
+            margin: 0; padding: 40px 20px;
+            color: var(--text-main); line-height: 1.6;
         }
 
-        .container { 
-            max-width: 850px; 
-            margin: 0 auto; 
-        }
-
-        header {
-            text-align: center;
-            margin-bottom: 50px;
-        }
-
+        .container { max-width: 850px; margin: 0 auto; }
+        header { text-align: center; margin-bottom: 50px; }
         header h1 { font-size: 2.2rem; color: #1a2a6c; margin-bottom: 10px; }
-        header p { color: var(--text-sub); font-size: 1.1rem; }
-
-        /* 시나리오 카드 스타일 */
+        
         .scenario-card { 
-            background: var(--card-bg); 
-            border-radius: 25px; 
-            box-shadow: 0 10px 30px rgba(0,0,0,0.08); 
-            margin-bottom: 40px; 
-            overflow: hidden;
-            border: 1px solid #e1e4e8;
+            background: var(--card-bg); border-radius: 25px; 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08); margin-bottom: 50px; 
+            overflow: hidden; border: 1px solid #e1e4e8;
         }
 
         .scenario-header { 
-            background: #2c3e50; 
-            color: white; 
-            padding: 18px 25px; 
-            font-weight: bold; 
-            display: flex; 
-            justify-content: space-between;
-            align-items: center;
+            background: #2c3e50; color: white; padding: 18px 25px; 
+            font-weight: bold; display: flex; justify-content: space-between; align-items: center;
         }
 
-        .category-tag {
-            background: var(--secondary-color);
-            padding: 4px 12px;
-            border-radius: 15px;
-            font-size: 0.85rem;
-        }
+        .category-tag { background: var(--secondary-color); padding: 4px 12px; border-radius: 15px; font-size: 0.85rem; }
 
-        .scenario-content { 
-            padding: 30px; 
-            min-height: 160px; 
-            background: #fff;
-            transition: all 0.3s ease;
-        }
+        .scenario-content { padding: 30px; background: #fff; border-bottom: 1px solid #eee; }
+        .situation-box { background: #f8f9fa; padding: 15px; border-radius: 10px; margin-top: 15px; font-size: 0.95rem; border: 1px solid #eee; }
+        .situation-label { font-weight: bold; color: var(--primary-color); display: block; margin-bottom: 5px; }
 
-        /* 입장 전환 버튼 구역 */
-        .btn-group { 
-            display: flex; 
-            border-top: 1px solid #eee;
-        }
-
+        .btn-group { display: flex; border-bottom: 1px solid #eee; }
         .view-btn { 
-            flex: 1; 
-            padding: 18px; 
-            border: none; 
-            cursor: pointer; 
-            font-weight: bold; 
-            font-size: 1rem;
-            transition: 0.3s; 
-            color: #95a5a6;
-            background: #fdfdfd;
+            flex: 1; padding: 20px; border: none; cursor: pointer; 
+            font-weight: bold; font-size: 1.1rem; transition: 0.3s; 
+            color: #95a5a6; background: #fdfdfd;
         }
+        .view-btn.active { background: #eef5ff; color: var(--primary-color); border-bottom: 4px solid var(--primary-color); }
 
-        .view-btn.active { 
-            background: var(--primary-color); 
-            color: white; 
+        .display-area { padding: 30px; display: none; animation: fadeIn 0.3s ease-in; }
+        .inner-box { padding: 20px; border-radius: 15px; margin-bottom: 20px; }
+        .reflection-area { background: #fff9db; border-left: 5px solid #fab005; }
+        
+        .solution-area { 
+            background: #e7f5ff; border: 2px dashed var(--primary-color); 
+            cursor: pointer; transition: all 0.3s; min-height: 60px;
+            display: flex; flex-direction: column; justify-content: center;
         }
+        .solution-area.revealed { background: #eef5ff; border: none; border-left: 5px solid var(--primary-color); cursor: default; }
+        
+        .box-title { font-weight: bold; display: block; margin-bottom: 10px; color: #333; }
+        .click-hint { color: var(--primary-color); font-weight: bold; text-align: center; font-size: 0.9rem; }
+        .solution-content { display: none; }
 
-        .view-btn:hover:not(.active) { background: #f1f1f1; color: var(--primary-color); }
-
-        /* 강조 텍스트 및 박스 */
-        .highlight { color: #e74c3c; font-weight: bold; text-decoration: underline; }
-        .reflection-box { 
-            background: #fff9db; 
-            border-left: 5px solid #fab005; 
-            padding: 15px; 
-            margin-top: 20px; 
-            border-radius: 0 10px 10px 0;
-            font-size: 0.95rem;
-            color: #5c5c5c;
-        }
-
-        /* 애니메이션 */
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        .fade-in { animation: fadeIn 0.5s ease-out; }
-
-        footer { text-align: center; color: var(--text-sub); margin-top: 50px; font-size: 0.9rem; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        footer { text-align: center; color: var(--text-sub); margin-top: 50px; padding-bottom: 50px; font-size: 0.9rem; }
     </style>
 </head>
 <body>
@@ -122,7 +74,7 @@
 <div class="container">
     <header>
         <h1>🎭 입장 바꿔 생각하기 시뮬레이터</h1>
-        <p>갈등의 순간, 상대방은 어떤 신발을 신고 있었을까요?</p>
+        <p>각 인물의 상황을 읽고 버튼을 눌러보세요. 클릭하면 화해의 대화가 열립니다.</p>
     </header>
 
     <div class="scenario-card">
@@ -130,12 +82,34 @@
             <span>SCENARIO 01. 성적표와 스마트폰</span>
             <span class="category-tag">#가족</span>
         </div>
-        <div id="content-1" class="scenario-content">
-            <p style="text-align:center; color:#999;">아래 버튼을 눌러 누구의 입장이 되어볼지 선택하세요.</p>
+        <div class="scenario-content">
+            <div class="situation-box">
+                <span class="situation-label">A의 상황 (수민)</span>
+                시험 끝난 해방감에 친구들과 딱 한 시간만 게임을 하며 스트레스를 풀려고 함.
+            </div>
+            <div class="situation-box">
+                <span class="situation-label">B의 상황 (엄마)</span>
+                업무에 지친 퇴근길, 자녀의 성적 하락 소식에 불안해하며 정성껏 뒷바라지한 마음을 알아주길 바람.
+            </div>
         </div>
         <div class="btn-group">
-            <button class="view-btn" onclick="showView(1, 'child')">자녀(수민)</button>
-            <button class="view-btn" onclick="showView(1, 'parent')">부모님(엄마)</button>
+            <button class="view-btn" onclick="toggleView(this, 'res1')">자녀(수민) 입장</button>
+            <button class="view-btn" onclick="toggleView(this, 'res1')">부모님(엄마) 입장</button>
+        </div>
+        <div id="res1" class="display-area">
+            <div class="inner-box reflection-area">
+                <span class="box-title">💡 두 사람의 숨겨진 속마음</span>
+                • <b>수민:</b> "나도 인정받고 싶은데 공부하는 기계로만 보시는 걸까?"<br>
+                • <b>엄마:</b> "사랑하기 때문에 미래가 너무 걱정되어 화가 나는 거야."
+            </div>
+            <div class="inner-box solution-area" onclick="revealSolution(this)">
+                <div class="click-hint">❓ 클릭하여 화해 시나리오 확인</div>
+                <div class="solution-content">
+                    <span class="box-title">🤝 화해를 위한 시나리오</span>
+                    <b>수민:</b> "엄마, 저도 성적이 안 나와서 속상해요. 공부 스트레스를 풀고 싶었는데 화부터 내시니 서운해요."<br>
+                    <b>엄마:</b> "미안해. 걱정이 앞서서 말이 거칠었구나. 네 노력을 몰라줘서 미안해. 규칙을 정해볼까?"
+                </div>
+            </div>
         </div>
     </div>
 
@@ -144,12 +118,34 @@
             <span>SCENARIO 02. 수업 시간의 한쪽 이어폰</span>
             <span class="category-tag">#학교</span>
         </div>
-        <div id="content-2" class="scenario-content">
-            <p style="text-align:center; color:#999;">아래 버튼을 눌러 누구의 입장이 되어볼지 선택하세요.</p>
+        <div class="scenario-content">
+            <div class="situation-box">
+                <span class="situation-label">A의 상황 (진우)</span>
+                너무 졸려서 잠을 깨기 위해 피해를 주지 않으려 몰래 딱 한 곡만 노래를 들으려 함.
+            </div>
+            <div class="situation-box">
+                <span class="situation-label">B의 상황 (선생님)</span>
+                밤새 수업 자료를 만든 정성이 학생에게 무시당했다는 생각에 서운함과 자괴감을 느낌.
+            </div>
         </div>
         <div class="btn-group">
-            <button class="view-btn" onclick="showView(2, 'student')">학생(진우)</button>
-            <button class="view-btn" onclick="showView(2, 'teacher')">선생님</button>
+            <button class="view-btn" onclick="toggleView(this, 'res2')">학생(진우) 입장</button>
+            <button class="view-btn" onclick="toggleView(this, 'res2')">선생님 입장</button>
+        </div>
+        <div id="res2" class="display-area">
+            <div class="inner-box reflection-area">
+                <span class="box-title">💡 두 사람의 숨겨진 속마음</span>
+                • <b>진우:</b> "선생님은 왜 실수 하나로 나라는 사람 전체를 평가하실까?"<br>
+                • <b>선생님:</b> "진우야, 선생님도 너의 반응에 상처받는 한 명의 사람이란다."
+            </div>
+            <div class="inner-box solution-area" onclick="revealSolution(this)">
+                <div class="click-hint">❓ 클릭하여 화해 시나리오 확인</div>
+                <div class="solution-content">
+                    <span class="box-title">🤝 화해를 위한 시나리오</span>
+                    <b>진우:</b> "선생님, 수업을 무시하려던 건 아니었어요. 예의를 지키지 못해 죄송합니다."<br>
+                    <b>선생님:</b> "선생님도 네 사정을 듣지 않고 감정적으로 화를 내서 미안해. 다음엔 다른 방법을 찾아보자."
+                </div>
+            </div>
         </div>
     </div>
 
@@ -158,12 +154,34 @@
             <span>SCENARIO 03. SNS에 공개된 나의 굴욕샷</span>
             <span class="category-tag">#우정</span>
         </div>
-        <div id="content-3" class="scenario-content">
-            <p style="text-align:center; color:#999;">아래 버튼을 눌러 누구의 입장이 되어볼지 선택하세요.</p>
+        <div class="scenario-content">
+            <div class="situation-box">
+                <span class="situation-label">A의 상황 (민지)</span>
+                앞머리를 망쳐 수치스러운 사진을 단짝에게만 보냈는데 허락 없이 공개되어 큰 상처를 받음.
+            </div>
+            <div class="situation-box">
+                <span class="situation-label">B의 상황 (민수)</span>
+                친구의 모습이 귀여워 유머로 올린 것이며, 친밀함을 자랑하고 싶은 철없는 마음에 한 행동임.
+            </div>
         </div>
         <div class="btn-group">
-            <button class="view-btn" onclick="showView(3, 'friendA')">사진 주인공(민지)</button>
-            <button class="view-btn" onclick="showView(3, 'friendB')">사진 올린 친구(민수)</button>
+            <button class="view-btn" onclick="toggleView(this, 'res3')">주인공(민지) 입장</button>
+            <button class="view-btn" onclick="toggleView(this, 'res3')">친구(민수) 입장</button>
+        </div>
+        <div id="res3" class="display-area">
+            <div class="inner-box reflection-area">
+                <span class="box-title">💡 두 사람의 숨겨진 속마음</span>
+                • <b>민지:</b> "내 망가진 모습을 퍼뜨리는 게 진짜 친구일까?"<br>
+                • <b>민수:</b> "친해서 한 장난인데 내가 나쁜 놈이 된 것 같아 당황스러워."
+            </div>
+            <div class="inner-box solution-area" onclick="revealSolution(this)">
+                <div class="click-hint">❓ 클릭하여 화해 시나리오 확인</div>
+                <div class="solution-content">
+                    <span class="box-title">🤝 화해를 위한 시나리오</span>
+                    <b>민지:</b> "민수야, 나에겐 수치스러운 일이니 지금 지워줬으면 좋겠어."<br>
+                    <b>민수:</b> "미안해 민지야. 네가 상처받을 줄 몰랐어. 내 생각이 짧았다. 바로 지울게."
+                </div>
+            </div>
         </div>
     </div>
 
@@ -172,12 +190,34 @@
             <span>SCENARIO 04. 나만 빼고 하는 귓속말</span>
             <span class="category-tag">#오해</span>
         </div>
-        <div id="content-4" class="scenario-content">
-            <p style="text-align:center; color:#999;">아래 버튼을 눌러 누구의 입장이 되어볼지 선택하세요.</p>
+        <div class="scenario-content">
+            <div class="situation-box">
+                <span class="situation-label">A의 상황 (지수)</span>
+                단짝들이 내 앞에서 귓속말을 하니 소외감을 느끼고 뒷담화를 하는 건 아닐까 불안해함.
+            </div>
+            <div class="situation-box">
+                <span class="situation-label">B의 상황 (친구들)</span>
+                지수의 생일 깜짝 파티를 준비하느라 지수에게 들키지 않으려고 설렘 속에 속삭임.
+            </div>
         </div>
         <div class="btn-group">
-            <button class="view-btn" onclick="showView(4, 'friendA')">소외감 느끼는 친구</button>
-            <button class="view-btn" onclick="showView(4, 'friendB')">준비 중인 친구</button>
+            <button class="view-btn" onclick="toggleView(this, 'res4')">소외감(지수) 입장</button>
+            <button class="view-btn" onclick="toggleView(this, 'res4')">준비중(친구) 입장</button>
+        </div>
+        <div id="res4" class="display-area">
+            <div class="inner-box reflection-area">
+                <span class="box-title">💡 두 사람의 숨겨진 속마음</span>
+                • <b>지수:</b> "나를 무시하는 것 같아 기분이 나쁘고 불안해."<br>
+                • <b>친구:</b> "지수야! 널 미워하는 게 아니라 정말 놀라게 해주고 싶었어!"
+            </div>
+            <div class="inner-box solution-area" onclick="revealSolution(this)">
+                <div class="click-hint">❓ 클릭하여 화해 시나리오 확인</div>
+                <div class="solution-content">
+                    <span class="box-title">🤝 화해를 위한 시나리오</span>
+                    <b>지수:</b> "얘들아, 나 빼고 속삭이니 소외감이 느껴져서 속상했어."<br>
+                    <b>친구:</b> "미안해! 실은 네 생일 파티를 준비하느라 비밀로 하려던 거였어!"
+                </div>
+            </div>
         </div>
     </div>
 
@@ -187,93 +227,28 @@
 </div>
 
 <script>
-    const data = {
-        1: {
-            child: `
-                <div class="fade-in">
-                    <strong>"나도 할 만큼 했다고! 왜 노는 꼴을 못 봐?"</strong><br><br>
-                    시험이 끝나고 오랜만에 친구들과 게임 한 판 하려는데, 엄마가 방 문을 열자마자 화부터 내신다. 
-                    <span class="highlight">'너 성적이 그 모양인데 폰이 손에 잡히니?'</span> 
-                    수학 점수 좀 떨어진 건 속상하지만, 나도 학원 다니며 최선을 다했다. 엄마는 나의 노력은 안 보고 오직 결과와 내 손에 들린 폰만 보시는 것 같아 억울하다.
-                    <div class="reflection-box">🤔 수민이의 마음: "엄마에게 나라는 존재는 공부하는 기계일 뿐인 걸까?"</div>
-                </div>`,
-            parent: `
-                <div class="fade-in">
-                    <strong>"속 터져 정말... 쟤가 나중에 뭐가 되려고 저러나 싶어."</strong><br><br>
-                    퇴근하고 지친 몸으로 집에 왔는데, 아이는 인사는커녕 스마트폰만 뚫어지게 보고 있다. 
-                    부족한 형편에 무리해서 학원 보내고, 나도 하고 싶은 거 참아가며 뒷바라지하는데... <span class="highlight">약속했던 성적표를 보고도 천하태평인 아이의 모습</span>에 덜컥 겁이 났다. 저러다 인생을 놓쳐버릴까 봐 무서워서 목소리가 커졌다.
-                    <div class="reflection-box">🤔 엄마의 마음: "너를 사랑하기에 너의 미래가 너무 걱정되어 화가 나는 거란다."</div>
-                </div>`
-        },
-        2: {
-            student: `
-                <div class="fade-in">
-                    <strong>"그냥 노래 한 곡 들은 건데... 전교생 앞에서 망신 주실 것까지는 없잖아요."</strong><br><br>
-                    자습 시간에 너무 졸려서 잠 좀 깨려고 한쪽 귀에만 몰래 이어폰을 꼈다. 
-                    그런데 선생님이 갑자기 다가와 이어폰을 뺏으며 소리를 지르셨다. <span class="highlight">"너 같은 애 때문에 교실 분위기가 다 망가지는 거야!"</span> 
-                    잘못한 건 알지만, 평소에 수업도 열심히 들었는데 이렇게까지 나쁜 학생 취급을 받으니 억울하고 반항심이 생긴다.
-                    <div class="reflection-box">🤔 진우의 마음: "선생님은 왜 나의 평소 모습은 무시하고 실수 하나로 나를 평가하실까?"</div>
-                </div>`,
-            teacher: `
-                <div class="fade-in">
-                    <strong>"정말 힘 빠지네... 내가 뭘 위해 잠도 못 자고 수업 준비를 하나 싶어."</strong><br><br>
-                    어젯밤 늦게까지 아이들이 좋아할 만한 영상을 찾고 학습지를 만들었다. 
-                    그런데 수업 시작하자마자 믿었던 진우가 이어폰을 낀 걸 봤다. <span class="highlight">'나의 정성이 무시당했다'</span>는 서운함과, 다른 아이들까지 따라 할까 봐 겁이 났다. 
-                    순간적으로 '무너져가는 교실'이 떠올라 감정이 터져버렸다. 교사로서 자괴감이 든다.
-                    <div class="reflection-box">🤔 선생님의 마음: "진우야, 선생님도 너의 반응에 상처받는 한 명의 사람이란다."</div>
-                </div>`
-        },
-        3: {
-            friendA: `
-                <div class="fade-in">
-                    <strong>"야! 당장 지워! 너 진짜 무개념이야?"</strong><br><br>
-                    집에서 앞머리 자르다 망한 사진을 우리 단톡방에 보냈다. 그냥 우리끼리 웃자고 보낸 건데... 
-                    오늘 학교에 가니 다른 반 애들까지 내 사진을 보고 낄낄거린다. <span class="highlight">민수가 내 허락도 없이 SNS 스토리에 올린 거였다!</span> 
-                    나에겐 엄청난 흑역사인데, 장난이라며 웃고 넘기라는 민수가 정말 이기적으로 느껴진다.
-                    <div class="reflection-box">🤔 민지의 마음: "나를 소중한 친구로 생각한다면 내 망가진 모습을 전교에 퍼뜨릴 수 있을까?"</div>
-                </div>`,
-            friendB: `
-                <div class="fade-in">
-                    <strong>"에이, 귀여워서 올린 건데 왜 그렇게 정색해? 진짜 소심하네."</strong><br><br>
-                    민지가 보낸 사진이 너무 웃기고 귀여웠다. 혼자 보기 아까워서 '내 친구 커트 실력'이라며 SNS에 올렸다. 
-                    <span class="highlight">악의가 있었던 것도 아니고, 댓글도 다 귀엽다는 반응뿐인데</span> 민지가 정색하며 화를 내니 당황스럽다. 
-                    친한 사이에 이 정도 장난도 못 치나 싶어 오히려 내가 더 서운하다.
-                    <div class="reflection-box">🤔 민수의 마음: "너랑 친하니까 한 장난인데, 내가 나쁜 놈이 된 것 같아 기분 나빠."</div>
-                </div>`
-        },
-        4: {
-            friendA: `
-                <div class="fade-in">
-                    <strong>"나만 빼고 자기들끼리만... 나 이제 걔들이랑 멀어진 건가?"</strong><br><br>
-                    점심 먹으러 가는 길, 단짝 친구 둘이 내 앞에서 자기들끼리만 귓속말을 하며 킥킥거린다. 
-                    슬쩍 끼어보려 해도 <span class="highlight">"나중에 말해줄게"</span>라며 말을 돌린다. 
-                    나만 모르는 이야기가 늘어가는 것 같아 소외감이 들고, 혹시 내 뒷담화를 하는 건 아닐까 하는 생각까지 들어 불안하다.
-                    <div class="reflection-box">🤔 지수의 마음: "앞에 내가 있는데 둘이서만 속삭이는 건 정말 기분 나쁜 일이야."</div>
-                </div>`,
-            friendB: `
-                <div class="fade-in">
-                    <strong>"지수가 눈치챈 것 같은데... 어떡하지? 감동 깨지면 안 되는데!"</strong><br><br>
-                    사실 다음 주가 지수 생일이다. 친구랑 둘이 지수 몰래 깜짝 파티를 준비 중이다. 
-                    준비 상황을 체크하려고 지수 몰래 아주 짧게 속삭인 건데, <span class="highlight">지수 표정이 갑자기 확 굳어버린 걸 봤다.</span> 
-                    비밀이라 말해줄 수도 없고, 그렇다고 파티 계획을 다 말하면 감동이 없을 텐데... 조마조마하고 미안하다.
-                    <div class="reflection-box">🤔 친구의 마음: "지수야! 널 미워하는 게 아니라 널 깜짝 놀라게 해주고 싶은 거야!"</div>
-                </div>`
-        }
-    };
+    function toggleView(btn, resId) {
+        const card = btn.closest('.scenario-card');
+        const targetRes = document.getElementById(resId);
+        const allBtns = card.querySelectorAll('.view-btn');
+        
+        allBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
 
-    function showView(scenarioId, role) {
-        const contentDiv = document.getElementById('content-' + scenarioId);
-        contentDiv.innerHTML = data[scenarioId][role];
-        
-        // 버튼 활성화 스타일 제어
-        const btnGroup = contentDiv.nextElementSibling;
-        const btns = btnGroup.querySelectorAll('.view-btn');
-        
-        btns.forEach(btn => btn.classList.remove('active'));
-        
-        // 역할에 따른 버튼 활성화 (0 또는 1)
-        const activeIdx = (role === 'child' || role === 'student' || role === 'friendA') ? 0 : 1;
-        btns[activeIdx].classList.add('active');
+        if (targetRes.style.display !== 'block') {
+            targetRes.style.display = 'block';
+            
+            const solArea = targetRes.querySelector('.solution-area');
+            solArea.classList.remove('revealed');
+            solArea.querySelector('.click-hint').style.display = 'block';
+            solArea.querySelector('.solution-content').style.display = 'none';
+        }
+    }
+
+    function revealSolution(el) {
+        el.classList.add('revealed');
+        el.querySelector('.click-hint').style.display = 'none';
+        el.querySelector('.solution-content').style.display = 'block';
     }
 </script>
 
